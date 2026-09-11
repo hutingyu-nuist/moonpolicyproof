@@ -13,6 +13,11 @@ test "inclusive port boundaries and canonical roundtrip" {
 ///|
 test "invalid intervals reject before arithmetic overflow" {
   for s in ["", "-1", "65536", "80-20", "1-2-3", "999999999999999", "+2", "1 "] {
-    assert_true((try? Ports::parse(s)) is Err(_))
+    try Ports::parse(s) catch {
+      Invalid(_) => ()
+      e => raise e
+    } noraise {
+      _ => fail("invalid port accepted")
+    }
   }
 }

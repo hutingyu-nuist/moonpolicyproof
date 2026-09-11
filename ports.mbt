@@ -48,7 +48,7 @@ pub fn Ports::parse(s : String) -> Ports raise PolicyError {
   if s == "*" {
     return Ports::any()
   }
-  let parts = s.split("-").map(x => x.to_string()).to_array()
+  let parts = s.split("-").map(x => x.to_owned()).to_array()
   match parts {
     [a] => {
       let n = decimal(a)
