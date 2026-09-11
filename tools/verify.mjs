@@ -1,6 +1,8 @@
 import {spawnSync} from 'node:child_process';
 function run(exe,args){console.log('> '+exe+' '+args.join(' '));const r=spawnSync(exe,args,{stdio:'inherit',timeout:240000});if(r.error)throw r.error;if(r.status!==0)process.exit(r.status||1);}
 run('moon',['version','--all']);
+// Fresh CI runners have no registry index; update before resolving pinned modules.
+run('moon',['update']);
 run('moon',['fmt','--check']);
 const targets=['wasm-gc','wasm','js'];if(process.argv.includes('--native'))targets.push('native');
 for(const target of targets){for(const step of ['check','build','test'])run('moon',[step,'--target',target,'--deny-warn']);}
