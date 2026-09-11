@@ -108,7 +108,7 @@ pub fn Rule::name(self : Rule) -> String {
 
 ///|
 pub struct Policy {
-  rules : Array[Rule]
+  priv rules : Array[Rule]
   default_action : Action
 } derive(Eq, Debug)
 

@@ -174,10 +174,10 @@ pub fn Rule::witness(
   match e.witness(e.predicate(self)) {
     Some(p) => {
       if !self.matches(p) {
-        raise Invalid("internal predicate witness mismatch")
+        raise Internal("internal predicate witness mismatch")
       }
       p
     }
-    None => raise Invalid("internal empty rule predicate")
+    None => raise Internal("internal empty rule predicate")
   }
 }

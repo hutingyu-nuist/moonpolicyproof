@@ -90,7 +90,7 @@ pub fn compare_scoped(
   for w in [newly_allowed, newly_denied] {
     if w is Some(w) {
       if !scope.contains(w.packet) {
-        raise Invalid("internal scoped witness mismatch")
+        raise Internal("internal scoped witness mismatch")
       }
     }
   }
@@ -121,7 +121,7 @@ pub fn Policy::find_scoped(
   let w = e.witness(root)
   if w is Some(p) {
     if !scope.contains(p) || self.evaluate(p).action != action {
-      raise Invalid("internal scoped query mismatch")
+      raise Internal("internal scoped query mismatch")
     }
   }
   w

@@ -43,7 +43,7 @@ fn execute(request : Json) -> (Int, Json) raise PolicyError {
         0,
         {
           "schema": "moonpolicyproof.help.v1",
-          "usage": "diff BEFORE AFTER [SCOPE] | audit POLICY | check POLICY ASSERTIONS | format POLICY; diff/check exit 1 on changes/failures, 2 invalid input, 3 resource exhaustion",
+          "usage": "diff BEFORE AFTER [SCOPE] | audit POLICY | check POLICY ASSERTIONS | format POLICY; diff/check exit 1 on changes/failures, 2 invalid input, 3 resource exhaustion, 4 internal verification failure",
         },
       )
     "format" =>
@@ -139,6 +139,16 @@ pub fn handle_request(text : String) -> (Int, String) {
           {
             "schema": "moonpolicyproof.error.v1",
             "category": "invalid",
+            "message": message,
+          } : Json).stringify(),
+      )
+    Internal(message) =>
+      (
+        4,
+        (
+          {
+            "schema": "moonpolicyproof.error.v1",
+            "category": "internal",
             "message": message,
           } : Json).stringify(),
       )

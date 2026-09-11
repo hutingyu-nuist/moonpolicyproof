@@ -40,8 +40,8 @@ pub fn Policy::check_assertions(
   assertions : Array[Assertion],
   max_nodes? : Int = 100000,
 ) -> Array[AssertionResult] raise PolicyError {
-  if assertions.length() > 64 {
-    raise Invalid("at most 64 assertions")
+  if assertions.length() == 0 || assertions.length() > 64 {
+    raise Invalid("assertion suite must contain 1..64 items")
   }
   let seen : Map[String, Bool] = Map([])
   for a in assertions {
@@ -61,7 +61,7 @@ pub fn Policy::check_assertions(
       Some(p) => {
         let d = self.evaluate(p)
         if d.action == a.expected || !a.scope.contains(p) {
-          raise Invalid("internal assertion replay mismatch")
+          raise Internal("internal assertion replay mismatch")
         }
         Some(d)
       }

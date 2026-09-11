@@ -43,7 +43,7 @@ pub fn Policy::find(
   let packet = e.witness(root)
   if packet is Some(p) {
     if self.evaluate(p).action != action {
-      raise Invalid("internal decision witness mismatch")
+      raise Internal("internal decision witness mismatch")
     }
   }
   packet

@@ -2,6 +2,7 @@
 pub suberror PolicyError {
   Invalid(String)
   Resource(String)
+  Internal(String)
 } derive(Debug)
 
 ///|

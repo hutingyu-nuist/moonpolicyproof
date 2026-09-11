@@ -30,7 +30,7 @@ pub fn Policy::audit(
     let blocked_witness = e.witness(blocked)
     if reachable_witness is Some(p) {
       if self.evaluate(p).rule_id != Some(rule.id) {
-        raise Invalid("internal reachability witness mismatch")
+        raise Internal("internal reachability witness mismatch")
       }
     }
     let blocked_by = match blocked_witness {
@@ -41,7 +41,7 @@ pub fn Policy::audit(
           d.rule_id is None ||
           d.rule_id == Some(rule.id) ||
           d.tested_rules > i {
-          raise Invalid("internal shadow witness mismatch")
+          raise Internal("internal shadow witness mismatch")
         }
         d.rule_id
       }

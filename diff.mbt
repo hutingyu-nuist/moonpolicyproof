@@ -46,7 +46,7 @@ fn replay_change(
       let old = before.evaluate(packet)
       let next = after.evaluate(packet)
       if old.action != expected_before || next.action != expected_after {
-        raise Invalid("internal semantic witness replay mismatch")
+        raise Internal("internal semantic witness replay mismatch")
       }
       Some({ packet, before: old, after: next })
     }
