@@ -1,0 +1,11 @@
+import {
+  "hutingyu-nuist/moonpolicyproof" @proof,
+}
+
+supported_targets = "js"
+
+pkgtype(kind: "executable")
+
+options(
+  link: { "js": { "format": "cjs" } },
+)
