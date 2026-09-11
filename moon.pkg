@@ -1,4 +1,5 @@
 import {
+  "moonbitlang/core/json",
   "oyjh0381/moonbdd" @bdd,
   "BeiLaDuo/cidr-audit" @cidr,
   "moonbitlang/core/debug",
