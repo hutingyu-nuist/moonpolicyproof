@@ -1,0 +1,24 @@
+name: CI
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install pinned MoonBit compiler and matching core
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 3 https://cli.moonbitlang.com/install/unix.sh -o /tmp/moon-install.sh
+          bash /tmp/moon-install.sh '0.10.4+2cc641edf'
+          echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
+      - name: Verify formats, four backends, CLI, examples and browser ABI
+        run: node tools/verify.mjs --native

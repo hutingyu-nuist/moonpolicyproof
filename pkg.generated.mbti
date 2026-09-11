@@ -1,0 +1,158 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "hutingyu-nuist/moonpolicyproof"
+
+import {
+  "BeiLaDuo/cidr-audit",
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn assertions_json(Array[AssertionResult]) -> Json
+
+pub fn audit_json(Array[RuleAudit]) -> Json
+
+pub fn compare(Policy, Policy, max_nodes? : Int) -> DiffReport raise PolicyError
+
+pub fn compare_scoped(Policy, Policy, Scope, max_nodes? : Int) -> DiffReport raise PolicyError
+
+pub fn handle_request(String) -> (Int, String)
+
+pub fn parse_assertions(String) -> Array[Assertion] raise PolicyError
+
+// Errors
+pub suberror PolicyError {
+  Invalid(String)
+  Resource(String)
+  Internal(String)
+} derive(@debug.Debug)
+
+// Types and methods
+pub(all) enum Action {
+  Allow
+  Deny
+} derive(Eq, @debug.Debug)
+pub fn Action::render(Self) -> String
+
+pub struct Assertion {
+  id : String
+  expected : Action
+  scope : Scope
+} derive(Eq, @debug.Debug)
+pub fn Assertion::new(String, Action, Scope) -> Self raise PolicyError
+
+pub(all) struct AssertionResult {
+  id : String
+  passed : Bool
+  counterexample : Packet?
+  actual : Decision?
+} derive(Eq, @debug.Debug)
+
+pub(all) struct ChangeWitness {
+  packet : Packet
+  before : Decision
+  after : Decision
+} derive(Eq, @debug.Debug)
+
+pub(all) enum Coverage {
+  Reachable
+  Partial
+  Shadowed
+} derive(Eq, @debug.Debug)
+pub fn Coverage::render(Self) -> String
+
+pub(all) struct Decision {
+  action : Action
+  rule_id : String?
+  tested_rules : Int
+} derive(Eq, @debug.Debug)
+pub fn Decision::to_json(Self) -> Json
+
+pub struct DiffReport {
+  newly_allowed : ChangeWitness?
+  newly_denied : ChangeWitness?
+  retained_nodes : Int
+} derive(Eq, @debug.Debug)
+pub fn DiffReport::allowed_witness(Self) -> ChangeWitness?
+pub fn DiffReport::denied_witness(Self) -> ChangeWitness?
+pub fn DiffReport::equivalent(Self) -> Bool
+pub fn DiffReport::node_count(Self) -> Int
+pub fn DiffReport::render(Self) -> String
+pub fn DiffReport::to_json(Self) -> Json
+
+pub struct Packet {
+  source : @cidr-audit.IPv4
+  destination : @cidr-audit.IPv4
+  protocol : Protocol
+  source_port : Int
+  destination_port : Int
+} derive(Eq, @debug.Debug)
+pub fn Packet::fields(Self) -> (String, String, Protocol, Int, Int)
+pub fn Packet::new(String, String, Protocol, Int, Int) -> Self raise PolicyError
+pub fn Packet::to_json(Self) -> Json
+
+pub struct Policy {
+  default_action : Action
+  // private fields
+} derive(Eq, @debug.Debug)
+pub fn Policy::audit(Self, max_nodes? : Int) -> Array[RuleAudit] raise PolicyError
+pub fn Policy::check_assertions(Self, Array[Assertion], max_nodes? : Int) -> Array[AssertionResult] raise PolicyError
+pub fn Policy::evaluate(Self, Packet) -> Decision
+pub fn Policy::find(Self, Action, max_nodes? : Int) -> Packet? raise PolicyError
+pub fn Policy::find_scoped(Self, Action, Scope, max_nodes? : Int) -> Packet? raise PolicyError
+pub fn Policy::new(Array[Rule], Action) -> Self raise PolicyError
+pub fn Policy::parse(String) -> Self raise PolicyError
+pub fn Policy::render(Self) -> String
+pub fn Policy::rule_count(Self) -> Int
+
+pub struct Ports {
+  low : Int
+  high : Int
+} derive(Eq, @debug.Debug)
+pub fn Ports::any() -> Self
+pub fn Ports::bounds(Self) -> (Int, Int)
+pub fn Ports::contains(Self, Int) -> Bool
+pub fn Ports::new(Int, Int) -> Self raise PolicyError
+pub fn Ports::parse(String) -> Self raise PolicyError
+pub fn Ports::render(Self) -> String
+
+pub(all) enum Protocol {
+  Tcp
+  Udp
+} derive(Eq, @debug.Debug)
+pub fn Protocol::render(Self) -> String
+
+pub struct Rule {
+  id : String
+  action : Action
+  protocol : Protocol?
+  source : @cidr-audit.CidrBlock
+  destination : @cidr-audit.CidrBlock
+  source_ports : Ports
+  destination_ports : Ports
+} derive(Eq, @debug.Debug)
+pub fn Rule::matches(Self, Packet) -> Bool
+pub fn Rule::name(Self) -> String
+pub fn Rule::new(String, Action, Protocol?, String, String, Ports, Ports) -> Self raise PolicyError
+pub fn Rule::render(Self) -> String
+pub fn Rule::witness(Self, max_nodes? : Int) -> Packet raise PolicyError
+
+pub(all) struct RuleAudit {
+  rule_id : String
+  coverage : Coverage
+  reachable_witness : Packet?
+  blocked_witness : Packet?
+  blocked_by : String?
+} derive(Eq, @debug.Debug)
+
+pub struct Scope {
+  rule : Rule
+} derive(Eq, @debug.Debug)
+pub fn Scope::contains(Self, Packet) -> Bool
+pub fn Scope::new(Protocol?, String, String, Ports, Ports) -> Self raise PolicyError
+pub fn Scope::parse(String) -> Self raise PolicyError
+pub fn Scope::render(Self) -> String
+
+// Type aliases
+
+// Traits
+
