@@ -16,7 +16,13 @@
 
 ## 安装和验证
 
-当前从 GitHub 源码使用；**尚未发布 MoonCakes，不要把源码命令误作已发布包安装说明**。
+核心库的 MoonCakes 包名为 `hutingyu-nuist/moonpolicyproof`，与 GitHub 所有者一致。在现有 MoonBit 项目中添加依赖：
+
+```sh
+moon add hutingyu-nuist/moonpolicyproof@0.1.1
+```
+
+下述完整 CLI、浏览器演示和验证流程从 GitHub 源码运行。
 
 需要 Git、Node.js 22 或更新版本，以及 MoonBit `moonc 0.10.4+2cc641edf`（CI 固定该版本及匹配 core）。
 
