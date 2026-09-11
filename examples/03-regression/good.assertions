@@ -1,0 +1,4 @@
+# Business invariants checked over the entire specified domain.
+assert web-up allow tcp 10.0.0.0/24 192.0.2.10/32 * 443
+assert no-public-ssh deny tcp 0.0.0.0/0 192.0.2.10/32 * 22
+assert no-udp-web deny udp 0.0.0.0/0 192.0.2.10/32 * 443

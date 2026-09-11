@@ -1,0 +1,6 @@
+moonpolicyproof 1
+default deny
+rule left deny tcp 10.0.0.0/25 192.0.2.10/32 * 443
+rule right allow tcp 10.0.0.128/25 192.0.2.10/32 * 443
+rule redundant allow tcp 10.0.0.0/24 192.0.2.10/32 * 443
+rule extended allow tcp 10.0.0.0/23 192.0.2.10/32 * 443
