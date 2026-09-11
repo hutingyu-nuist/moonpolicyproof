@@ -1,0 +1,4 @@
+MoonPolicyProof
+Copyright 2026 hutingyu-nuist
+
+Uses MoonBDD (oyjh0381, Apache-2.0) and cidr-audit (BeiLaDuo, Apache-2.0) as dependencies. Their source and notices remain in their original packages; no dependency source is vendored here.
