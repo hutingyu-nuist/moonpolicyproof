@@ -1,0 +1,8 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'none'; worker-src 'self'; object-src 'none'; base-uri 'none'"><title>MoonPolicyProof · 策略变更审查</title><link rel="stylesheet" href="style.css"></head>
+<body><main><header><span class="eyebrow">MOONPOLICYPROOF / LOCAL ANALYSIS</span><h1>规则改了，<br>哪些流量的结果变了？</h1><p>比较五元组策略，提供经过独立回放的新增放行 / 阻断反例。</p><p class="boundary">仅 IPv4 · TCP/UDP · 无状态 · 首次匹配模型。不是设备配置认证，不自动修改任何网络。</p></header>
+<div class="toolbar"><button id="example">加载放宽网段示例</button><button id="compare" class="primary">分析变更</button><button id="cancel" disabled>取消分析</button></div>
+<section class="editors"><label>变更前<textarea id="before" spellcheck="false" maxlength="131072"></textarea></label><label>变更后<textarea id="after" spellcheck="false" maxlength="131072"></textarea></label></section>
+<label class="scope">限定范围（可留空；非空时仅判断此范围）<input id="scope" maxlength="256" placeholder="tcp 10.0.0.0/24 192.0.2.10/32 * 443"></label>
+<section class="result" aria-live="polite"><h2 id="status">等待分析</h2><pre id="output">所有分析在本机 Worker 中执行。不上传策略，不使用遥测或第三方脚本。</pre></section>
+<footer>32 个核心测试 · 独立逐包解释器 · BDD 有界分析 · Apache-2.0</footer></main><script type="module" src="app.js"></script></body></html>
